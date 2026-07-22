@@ -1,0 +1,65 @@
+{{ define "main" }}
+  {{- $heroPattern := site.Params.hero | default "/assets/imgs/hero.*" -}}
+  {{- $hero := resources.GetMatch $heroPattern -}}
+  {{- with $hero -}}
+    {{- $heroResize := .Resize (site.Params.hero_resize | default "1200x webp") -}}
+    <div class="hero" id="hero" style="background-image: url({{ $heroResize.Permalink }});"></div>
+  {{- end -}}
+
+  {{- with site.Params.greeting }}
+  <div class="greeting">{{ . }}</div>
+  {{- end }}
+
+  {{ $pages := where site.RegularPages "Type" "posts" }}
+  {{ $paginator := .Paginate $pages }}
+
+  <div class="section-head">
+    <div class="section-head-left">
+      <h2>{{ site.Params.section_posts | default "# Posts" }}</h2>
+      <span class="count">({{ len $pages }})</span>
+    </div>
+  </div>
+
+  <div class="card-grid">
+    {{ range $paginator.Pages }}
+      {{- $cover := .Params.cover -}}
+      {{- $coverUrl := "" -}}
+      {{- if $cover -}}
+        {{- if or (hasPrefix $cover "http://") (hasPrefix $cover "https://") -}}
+          {{- $coverUrl = $cover -}}
+        {{- else -}}
+          {{- $coverImg := resources.Get $cover -}}
+          {{- if $coverImg -}}
+            {{- $coverResize := $coverImg.Resize (site.Params.cover_resize | default "320x webp") -}}
+            {{- $coverUrl = $coverResize.Permalink -}}
+          {{- else -}}
+            {{- $coverUrl = $cover | relURL -}}
+          {{- end -}}
+        {{- end -}}
+      {{- end -}}
+      {{- $initial := trim (.Title | truncate 1 "") " " -}}
+      {{- $hue := mod (mul (len .Title) 23) 360 -}}
+      <a href="{{ .Permalink }}" class="card">
+        <div class="card-cover">
+          {{- if $coverUrl -}}
+            <img src="{{ $coverUrl }}" alt="" loading="lazy">
+          {{- else -}}
+            <div class="card-cover-placeholder" style="background: hsl({{ $hue }}, 20%, 92%); color: hsl({{ $hue }}, 30%, 40%);">{{ $initial }}</div>
+          {{- end -}}
+        </div>
+        <div class="card-body">
+          <div class="card-title">{{ .Title }}</div>
+          <div class="card-excerpt">{{ .Summary | plainify | truncate 80 }}</div>
+          <div class="card-meta">
+            {{- with .Params.author }}
+              <span class="card-meta-author">{{ . }}</span>
+            {{- end }}
+            <span class="card-meta-date">{{ .Date.Format "2006-01-02" }}</span>
+          </div>
+        </div>
+      </a>
+    {{ end }}
+  </div>
+
+  {{ partial "pagination.html" $paginator }}
+{{ end }}

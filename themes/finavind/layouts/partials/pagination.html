@@ -1,0 +1,47 @@
+{{- $paginator := . -}}
+{{- if gt $paginator.TotalPages 1 -}}
+<nav class="pagination">
+  {{- with $paginator.Prev }}
+  <a href="{{ .URL }}" rel="prev" aria-label="Previous" class="page-nav">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+      <polygon points="18,4 18,20 4,12" />
+    </svg>
+  </a>
+  {{- else }}
+  <span class="page-nav page-disabled" aria-disabled="true">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+      <polygon points="18,4 18,20 4,12" />
+    </svg>
+  </span>
+  {{- end }}
+
+  {{- $current := $paginator.PageNumber -}}
+  {{- $total := $paginator.TotalPages -}}
+  {{- $start := math.Max 1 (sub $current 1) -}}
+  {{- $end := math.Min $total (add $current 2) -}}
+
+  {{- range $paginator.Pagers -}}
+    {{- if and (ge .PageNumber $start) (le .PageNumber $end) -}}
+      {{- if eq .PageNumber $current -}}
+      <strong class="page-current" aria-current="page">{{ .PageNumber }}</strong>
+      {{- else -}}
+      <a href="{{ .URL }}">{{ .PageNumber }}</a>
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+
+  {{- with $paginator.Next }}
+  <a href="{{ .URL }}" rel="next" aria-label="Next" class="page-nav">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+      <polygon points="6,4 6,20 20,12" />
+    </svg>
+  </a>
+  {{- else }}
+  <span class="page-nav page-disabled" aria-disabled="true">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+      <polygon points="6,4 6,20 20,12" />
+    </svg>
+  </span>
+  {{- end }}
+</nav>
+{{- end -}}

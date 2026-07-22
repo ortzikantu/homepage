@@ -1,0 +1,9 @@
+baseURL = "https://ortzikantu.com"
+locale = "en"
+title = "Ortzikantu"
+copyright = "Ortzikantu"
+theme = "finavind"
+pagination.pagerSize = 6
+hasCJKLanguage = true
+enableEmoji = true
+disableKinds = ["section", "taxonomy", "term"] # DO NOT MODIFY

@@ -1,0 +1,51 @@
+{{ define "main" }}
+<div class="section-head">
+    <div class="section-head-left">
+        <h2><span class="title-hash"># </span>{{ .Title }}</h2>
+        {{- $count := len (where site.RegularPages "Params.layout" "album") }}
+        <span class="count">({{ $count }})</span>
+    </div>
+</div>
+
+{{- $albums := where site.RegularPages "Params.layout" "album" -}}
+<div class="album-grid">
+    {{ range $albums.ByDate.Reverse }} {{- $dir := .Params.album_dir -}} {{-
+    $photos := resources.Match (printf "%s/*" $dir) -}} {{- $cover := index
+    $photos 0 -}} {{- $cover2 := index $photos 1 -}} {{- $cover3 := index
+    $photos 2 -}}
+    <a href="{{ .Permalink }}" class="album-card">
+        <div class="album-cover-stack">
+            {{- if $cover3 }}
+            <div class="album-cover album-cover-back">
+                {{- $t := $cover3.Resize "200x webp" }}<img
+                    src="{{ $t.Permalink }}"
+                    alt=""
+                    loading="lazy"
+                />
+            </div>
+            {{- end }} {{- if $cover2 }}
+            <div class="album-cover album-cover-mid">
+                {{- $t := $cover2.Resize "200x webp" }}<img
+                    src="{{ $t.Permalink }}"
+                    alt=""
+                    loading="lazy"
+                />
+            </div>
+            {{- end }} {{- if $cover }}
+            <div class="album-cover album-cover-front">
+                {{- $t := $cover.Resize "200x webp" }}<img
+                    src="{{ $t.Permalink }}"
+                    alt=""
+                    loading="lazy"
+                />
+            </div>
+            {{- end }}
+        </div>
+        <div class="album-info">
+            <span class="album-title">{{ .Title }}</span>
+            <span class="album-count">{{ len $photos }} photos</span>
+        </div>
+    </a>
+    {{ end }}
+</div>
+{{ end }}

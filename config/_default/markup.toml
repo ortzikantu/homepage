@@ -1,0 +1,8 @@
+[markup]
+[markup.goldmark]
+[markup.goldmark.extensions]
+footnote = true
+typographer = true
+[markup.tableOfContents]
+startLevel = 2
+endLevel = 3

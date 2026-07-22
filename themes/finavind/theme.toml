@@ -1,0 +1,8 @@
+name = 'Finavind'
+description = 'A serene theme for focused reading...'
+license = 'GPL-3.0-or-later'
+min_version = "0.164.0"
+
+[author]
+name = 'Hao Wu'
+homepage = 'https://ortzikantu.com'

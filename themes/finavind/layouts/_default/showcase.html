@@ -1,0 +1,31 @@
+{{ define "main" }}
+<div class="section-head">
+    <div class="section-head-left">
+        <h2><span class="title-hash"># </span>{{ .Title }}</h2>
+        {{- $count := len (where site.RegularPages "Params.layout"
+        "showcase-item") }}
+        <span class="count">({{ $count }})</span>
+    </div>
+</div>
+
+{{- $works := where site.RegularPages "Params.layout" "showcase-item" -}}
+<div class="showcase-grid">
+    {{ range $works.ByDate.Reverse }} {{- $coverSrc :=
+    "/assets/imgs/default_works_icon.webp" | absURL }} {{- with .Params.cover }}
+    {{- $img := resources.Get . }} {{- if $img }} {{- $thumb := $img.Resize
+    "400x webp" }} {{- $coverSrc = $thumb.Permalink }} {{- else }} {{- $coverSrc
+    = . | relURL }} {{- end }} {{- end }}
+    <a href="{{ .Permalink }}" class="showcase-card">
+        <div class="showcase-card-cover-wrap">
+            <div class="showcase-card-cover">
+                <img src="{{ $coverSrc }}" alt="" loading="lazy" />
+            </div>
+        </div>
+        <div class="showcase-card-name">
+            {{ .Title }}
+            <span class="showcase-card-year">({{ .Date.Format "2006-01" }})</span>
+        </div>
+    </a>
+    {{ end }}
+</div>
+{{ end }}

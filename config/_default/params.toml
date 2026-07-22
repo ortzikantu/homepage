@@ -1,0 +1,59 @@
+[params]
+  author = "Hao Wu"
+  description = "Ortzikantu - A personal blog about programming, design, and life"
+  og_image = "/assets/imgs/og.jpg"
+
+  # Hero section
+  hero = "/assets/imgs/hero.*"
+  hero_resize = "1200x webp"
+
+  # Card cover resize
+  cover_resize = "320x webp"
+
+  # Greeting
+  greeting = "Hey there! 👋 很高兴在这里与你相遇。这里有我撰写的关于编程、设计、剧本及其他有趣内容的文章和一些摄影作品。🌟お幸せに~"
+
+  # Social links
+  [[params.social]]
+    name = "Codeberg"
+    url = "https://codeberg.org/ortzikantu"
+    icon = "/assets/pics/social-icons/codeberg.svg"
+  [[params.social]]
+    name = "Github"
+    url = "https://github.com/ortzikantu"
+    icon = "/assets/pics/social-icons/github.svg"
+  [[params.social]]
+    name = "哔哩哔哩"
+    url = "https://space.bilibili.com/3632306252155657"
+    icon = "/assets/pics/social-icons/bilibili.svg"
+  [[params.social]]
+    name = "Youtube"
+    url = "https://www.youtube.com/@ortzikantu"
+    icon = "/assets/pics/social-icons/youtube.svg"
+  [[params.social]]
+    name = "抖音"
+    url = "https://www.douyin.com/user/MS4wLjABAAAAL1KMAKYnXhLLZjZ4gyHygXUVn594HbB82OO1JuAe1o8wzz0MD-7d0QXdhbflnytf?from_tab_name=main"
+    icon = "/assets/pics/social-icons/tiktok.svg"
+  [[params.social]]
+    name = "Steam"
+    url = "https://steamcommunity.com/profiles/76561198688339248"
+    icon = "/assets/pics/social-icons/steam.svg"
+  [[params.social]]
+    name = "Email"
+    url = "mailto://hwu.585@gmail.com"
+    icon = "/assets/pics/social-icons/email.svg"
+
+  # Drawer (side menu bio)
+  [params.drawer]
+    avatar = "/assets/imgs/avatar.jpg"
+    nickname = "Hao Wu"
+    id = "ortzikantu"
+    bio = "鄙人自号云吟先生，半瓶水的玄学爱好者、独立游戏制作人、开源爱好者、电影爱好者、赛车迷、股民、宅。"
+    region = "China / Jiangsu / Suzhou"
+
+  # Footer
+  [params.footer]
+    left = "© {year} {site}. All rights reserved."
+    left_sub = "All marks and trademarks are the property of their respective owners."
+    right = "Built with <a href=\"https://gohugo.io\" target=\"_blank\" rel=\"noopener\">Hugo</a>"
+    right_sub = "Theme <strong>Finavind</strong> designed by Hao Wu"

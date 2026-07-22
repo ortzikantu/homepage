@@ -1,0 +1,11 @@
+@use "variables" as *;
+
+// ── Print ──
+@media print {
+  #header, #footer, .hero, .footer-backtotop {
+    display: none;
+  }
+  .content {
+    padding: 0;
+  }
+}

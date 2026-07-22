@@ -1,0 +1,120 @@
+@use "variables" as *;
+
+// ── Card grid ──
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    border-radius: $radius;
+    overflow: hidden;
+    height: 284px;
+    background: $bg;
+    text-decoration: none;
+    color: inherit;
+    box-shadow: $shadow-sm;
+    transition: box-shadow 0.25s ease;
+    position: relative;
+
+    &:hover {
+        box-shadow: $shadow-hover;
+        .card-title {
+            color: $accent;
+        }
+        .card-cover img {
+            transform: scale(1.05);
+        }
+    }
+}
+
+.card-cover {
+    flex-shrink: 0;
+    height: 130px;
+    overflow: hidden;
+    background: $code-bg;
+
+    img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        margin: 0;
+        transition: transform 0.3s ease;
+    }
+
+    .card-cover-placeholder {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2.2rem;
+        font-weight: 700;
+        font-family: $font;
+    }
+}
+
+.card-body {
+    flex: 1;
+    padding: 0.9rem 1rem;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.card-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: $fg;
+    line-height: 1.35;
+    margin-bottom: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    flex-shrink: 0;
+    min-height: 2.6rem;
+    transition: color 0.2s ease;
+}
+
+.card-excerpt {
+    font-size: 0.68rem;
+    color: $meta;
+    line-height: 1.45;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.card-meta {
+    font-size: 0.7rem;
+    color: $meta;
+    line-height: 1.5;
+    flex-shrink: 0;
+    min-height: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    border-top: 1px solid $code-bg;
+    padding-top: 0.4rem;
+    margin-top: auto;
+
+    .card-meta-author {
+        font-size: 0.75rem;
+        font-weight: 400;
+        color: $meta;
+        margin-bottom: 0.2rem;
+    }
+
+    .card-meta-date {
+        font-size: 0.65rem;
+        color: $meta;
+    }
+}

@@ -1,0 +1,23 @@
+@use "variables" as *;
+
+// ── 404 ──
+.error-page {
+    text-align: center;
+    padding: 4rem 1rem;
+}
+.error-code {
+    font-size: 5rem;
+    font-weight: 700;
+    color: $accent;
+    margin: 0;
+    line-height: 1.2;
+}
+.error-msg {
+    font-size: 1.1rem;
+    color: $fg;
+    margin: 1rem 0 0.5rem;
+}
+.error-link {
+    @extend %btn;
+    @extend %btn-hover-flip;
+}

@@ -1,0 +1,30 @@
+@use "variables" as *;
+
+// ── Responsive ──
+@media (max-width: 900px) {
+    .card-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 550px) {
+    .card-grid {
+        grid-template-columns: 1fr;
+    }
+    .card {
+        height: auto;
+    }
+    .card-cover {
+        height: 160px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .content {
+        padding: 5rem 1rem 5rem;
+    }
+
+    .greeting {
+        margin: 2.5rem auto;
+    }
+}

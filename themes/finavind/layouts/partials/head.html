@@ -1,0 +1,102 @@
+{{ hugo.Generator }}
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#faf8f5">
+
+<!-- Splash styles (values mirror _variables.scss) -->
+<style>
+#splash {
+  position: fixed; inset: 0; z-index: 99999;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  background: #f1f1f1;
+  background-image: linear-gradient(to right, #eaeaea 1px, transparent 1px),
+    linear-gradient(to bottom, #eaeaea 1px, transparent 1px);
+  background-size: 7px 7px;
+}
+#splash-title {
+  font-family: "Noto Sans SC","Source Han Sans SC",sans-serif;
+  font-size: 1.6rem; font-weight: 700;
+  color: #2c2836; letter-spacing: 0.02em;
+}
+#splash-dot {
+  margin-top: 12px; display: flex; gap: 6px;
+}
+#splash-dot span {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: #b8452e;
+  animation: splashPulse 1.2s ease-in-out infinite;
+}
+#splash-dot span:nth-child(2) { animation-delay: 0.2s; }
+#splash-dot span:nth-child(3) { animation-delay: 0.4s; }
+@keyframes splashPulse {
+  0%, 80%, 100% { opacity: 0.2; transform: scale(0.8); }
+  40% { opacity: 1; transform: scale(1); }
+}
+</style>
+
+<!-- Stylesheets -->
+{{- with resources.Get "css/main.scss" }}
+  {{- $options := dict "transpiler" "dartsass" "targetPath" "css/main.css" }}
+  {{- $style := . | css.Sass $options | resources.Minify | resources.Fingerprint }}
+  <link rel="stylesheet" href="{{ $style.Permalink }}" integrity="{{ $style.Data.Integrity }}">
+{{- end }}
+
+{{- /* custom.scss is intentionally empty (placeholder for user overrides) */}}
+
+<title>{{ if .IsHome }}{{ site.Title }}{{ else }}{{ .Title }}  @  {{ site.Title }}{{ end }}</title>
+
+{{- with .Description }}
+<meta name="description" content="{{ . }}">
+{{- else }}
+{{- with site.Params.description }}
+<meta name="description" content="{{ . }}">
+{{- end }}
+{{- end }}
+
+{{- $keywords := .Keywords | default .Params.tags }}
+{{- with $keywords }}
+<meta name="keywords" content="{{ delimit . ", " }}">
+{{- end }}
+
+<!-- Open Graph -->
+<meta property="og:title" content="{{ if .IsHome }}{{ site.Title }}{{ else }}{{ .Title }} — {{ site.Title }}{{ end }}">
+<meta property="og:type" content="{{ if .IsHome }}website{{ else }}article{{ end }}">
+<meta property="og:url" content="{{ .Permalink }}">
+<meta property="og:site_name" content="{{ site.Title }}">
+{{- with .Description }}
+<meta property="og:description" content="{{ . }}">
+{{- end }}
+{{- $ogImage := site.Params.og_image | default "/assets/imgs/og.jpg" }}
+{{- $ogImageAbs := $ogImage | absURL }}
+<meta property="og:image" content="{{ $ogImageAbs }}">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ if .IsHome }}{{ site.Title }}{{ else }}{{ .Title }} — {{ site.Title }}{{ end }}">
+{{- with .Description }}
+<meta name="twitter:description" content="{{ . }}">
+{{- end }}
+<meta name="twitter:image" content="{{ $ogImageAbs }}">
+
+{{- with .Params.author }}
+<meta name="author" content="{{ . }}">
+{{- else }}
+{{- with site.Params.author }}
+<meta name="author" content="{{ . }}">
+{{- end }}
+{{- end }}
+
+<!-- Canonical URL -->
+<link rel="canonical" href="{{ .Permalink }}">
+
+<!-- Favicons -->
+<link rel="icon" type="image/x-icon" href="{{ "/assets/imgs/favicon.ico" | absURL }}">
+<link rel="icon" type="image/png" sizes="32x32" href="{{ "/assets/imgs/favicon-32x32.png" | absURL }}">
+<link rel="icon" type="image/png" sizes="16x16" href="{{ "/assets/imgs/favicon-16x16.png" | absURL }}">
+<link rel="apple-touch-icon" href="{{ "/assets/imgs/apple-touch-icon.png" | absURL }}">
+
+<!-- RSS -->
+{{- with .OutputFormats.Get "RSS" }}
+<link rel="alternate" type="application/rss+xml" title="{{ site.Title }}" href="{{ .Permalink }}">
+{{- end }}

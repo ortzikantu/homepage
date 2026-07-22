@@ -1,0 +1,96 @@
+@use "sass:color";
+
+// ── Variables ──
+$font:
+    "JetBrains Mono", "Meslo LG", "Cascadia Code", "Fira Code",
+    "Noto Sans Mono", "Source Code Pro",
+    ui-monospace, monospace,
+    "Noto Sans SC", "Source Han Sans SC",
+    sans-serif;
+
+// ── Primary palette ──
+$bg: #fff;
+$bg-body: #f1f1f1;
+$fg: #2c2836;
+$meta: #5a5266;
+$accent: #3d6b5e;
+$border: #b8b2c2;
+$code-bg: #e4e6eb;
+$error: #d44343;
+
+// ── Extended palette (used in select places) ──
+$accent-alt: #b8452e;
+
+// ── Code block ──
+$code-block-bg: $fg;
+$code-block-fg: #f0ece4;
+
+// ── Layout ──
+$page-w: 63rem;
+$radius: 12px;
+$shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+$shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.12);
+
+// ── Grid background pattern ──
+$grid-color: #eaeaea;
+
+// ── Shared placeholders (usable from all files via @use "variables" as *) ──
+
+// Pill button hover: flip fg↔bg
+%btn-hover-flip {
+    &:hover {
+        background: $accent;
+        color: $bg;
+        box-shadow: $shadow-hover;
+    }
+}
+
+// Pill button base
+%btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 1rem;
+    border: none;
+    border-radius: 12px;
+    background: $bg;
+    color: $accent;
+    cursor: pointer;
+    font-family: $font;
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.8;
+    text-decoration: none;
+    box-shadow: $shadow-sm;
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+// Icon button (28×28 circle)
+%icon-btn {
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: $accent;
+    transition:
+        background 0.2s ease,
+        color 0.2s ease;
+    &:hover {
+        color: $bg;
+        background-color: $accent;
+    }
+    svg {
+        width: 20px;
+        height: 20px;
+        stroke: currentColor;
+    }
+}

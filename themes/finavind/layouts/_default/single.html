@@ -1,0 +1,94 @@
+{{ define "main" }}
+  <article>
+    {{- $cover := .Params.cover }}
+    {{- if $cover }}
+      {{- $coverImg := resources.Get $cover }}
+      {{- if $coverImg }}
+        {{- $coverResize := $coverImg.Resize "800x webp" }}
+        <img src="{{ $coverResize.Permalink }}" alt="" class="cover-img" loading="lazy">
+      {{- else }}
+        <img src="{{ $cover | absURL }}" alt="" class="cover-img" loading="lazy">
+      {{- end }}
+    {{- end }}
+
+    <header class="article-header">
+      <h1 class="article-title">{{ .Title }}</h1>
+      <div class="post-meta">
+        <div class="post-meta-line">
+          {{- with .Params.author }}{{ . }}{{ end }}
+        </div>
+        <div class="post-meta-line">
+          <span class="meta-label">· Posted</span>
+          <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006-01-02 15:04" }}</time>
+        </div>
+        {{- with .Params.update }}
+        {{- if ne . "" }}
+        {{- $updateTime := time . }}
+        <div class="post-meta-line">
+          <span class="meta-label">· Edited</span>
+          <time datetime="{{ $updateTime.Format "2006-01-02" }}">{{ $updateTime.Format "2006-01-02 15:04" }}</time>
+        </div>
+        {{- end }}
+        {{- end }}
+      </div>
+    </header>
+
+    <div class="article-body">
+      {{- if .Params.toc }}
+      <div class="toc-floating" id="toc-floating">
+        <button class="toc-btn" id="toc-btn" aria-label="Table of Contents">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="9" y1="6" x2="21" y2="6"/>
+            <line x1="9" y1="12" x2="21" y2="12"/>
+            <line x1="9" y1="18" x2="21" y2="18"/>
+            <circle cx="4.5" cy="6" r="1.5" fill="currentColor" stroke="none"/>
+            <circle cx="4.5" cy="12" r="1.5" fill="currentColor" stroke="none"/>
+            <circle cx="4.5" cy="18" r="1.5" fill="currentColor" stroke="none"/>
+          </svg>
+        </button>
+        <div class="toc-card" id="toc-card">
+          <div class="toc-card-head">
+            <span class="toc-card-title">Contents</span>
+          </div>
+          {{ .TableOfContents }}
+        </div>
+      </div>
+      {{- end }}
+
+      {{ .Content }}
+    </div>
+
+    {{- if and .Params.license .Params.license_url }}
+    <div class="license-card">
+      <span class="license-card-text">
+        This article is licensed under {{ .Params.license }}.
+      </span>
+      <a href="{{ .Params.license_url }}" target="_blank" rel="license noopener" class="license-card-link">
+        View license →
+      </a>
+    </div>
+    {{- end }}
+  </article>
+
+  {{- if .Params.toc }}
+  <script>
+  (function(){
+    var btn = document.getElementById('toc-btn');
+    var card = document.getElementById('toc-card');
+    if (!btn || !card) return;
+    function openToc(){ card.classList.add('show'); btn.classList.add('active'); }
+    function closeToc(){ card.classList.remove('show'); btn.classList.remove('active'); }
+    btn.addEventListener('click', function(e){
+      e.stopPropagation();
+      card.classList.contains('show') ? closeToc() : openToc();
+    });
+    document.addEventListener('click', function(e){
+      if (card.classList.contains('show') && !card.contains(e.target) && !btn.contains(e.target)) closeToc();
+    });
+    document.addEventListener('keydown', function(e){
+      if (e.key === 'Escape' && card.classList.contains('show')) closeToc();
+    });
+  })();
+  </script>
+  {{- end }}
+{{ end }}

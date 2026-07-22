@@ -1,0 +1,56 @@
+<footer id="footer">
+  <div class="footer-backtotop">
+    <button class="btn-icon backtotop-btn" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })" aria-label="Back to top">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12.7071 4.29289C12.3166 3.90237 11.6834 3.90237 11.2929 4.29289L6.29289 9.29289C5.90237 9.68342 5.90237 10.3166 6.29289 10.7071C6.68342 11.0976 7.31658 11.0976 7.70711 10.7071L11 7.41421L11 19C11 19.5523 11.4477 20 12 20C12.5523 20 13 19.5523 13 19L13 7.41421L16.2929 10.7071C16.6834 11.0976 17.3166 11.0976 17.7071 10.7071C18.0976 10.3166 18.0976 9.68342 17.7071 9.29289L12.7071 4.29289Z" fill="currentColor"/>
+      </svg>
+    </button>
+  </div>
+
+  <div class="footer-top">
+    {{- with site.Params.social }}
+    <div class="footer-social">
+      {{- range . }}
+      {{- $iconSrc := "" }}
+      {{- with .icon }}
+        {{- $iconRes := resources.Get . }}
+        {{- if $iconRes }}
+          {{- $iconSrc = $iconRes.Permalink }}
+        {{- else }}
+          {{- $iconSrc = . | absURL }}
+        {{- end }}
+      {{- end }}
+      <a href="{{ .url }}" target="_blank" rel="noopener noreferrer" title="{{ .name }}">
+        {{- if $iconSrc }}
+        <span class="social-icon" style="-webkit-mask-image: url('{{ $iconSrc }}'); mask-image: url('{{ $iconSrc }}');"></span>
+        {{- else }}
+        <span class="social-fallback">{{ substr .name 0 1 }}</span>
+        {{- end }}
+      </a>
+      {{- end }}
+    </div>
+    {{- end }}
+
+    <div class="footer-symbol"></div>
+
+    <div class="footer-statement">
+      {{- range site.Menus.statement }}
+      <a href="{{ .URL }}">{{ .Name }}</a>
+      {{- end }}
+    </div>
+  </div>
+
+  <hr class="footer-divider">
+
+  {{- $row1 := site.Params.footer.left | default "&copy; {year} {site}. All rights reserved." -}}
+  {{- $row1 = replace $row1 "{year}" (string now.Year) -}}
+  {{- $row1 = replace $row1 "{site}" (site.Copyright | default site.Title) -}}
+  {{- $row2 := site.Params.footer.right | default "" -}}
+  {{- $row3 := site.Params.footer.right_sub | default "" -}}
+
+  <div class="footer-bottom">
+    <div class="footer-row">{{ $row1 | safeHTML }}</div>
+    {{- with $row2 }}<div class="footer-row">{{ . | safeHTML }}</div>{{ end }}
+    {{- with $row3 }}<div class="footer-row">{{ . | safeHTML }}</div>{{ end }}
+  </div>
+</footer>

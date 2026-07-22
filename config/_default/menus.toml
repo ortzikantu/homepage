@@ -1,0 +1,29 @@
+[[main]]
+  name = "Posts"
+  url = "/"
+  weight = 1
+
+[[main]]
+  name = "Gallery"
+  url = "/gallery/"
+  weight = 2
+
+[[main]]
+  name = "Showcase"
+  url = "/showcase/"
+  weight = 3
+
+[[main]]
+  name = "About"
+  url = "/about/"
+  weight = 4
+
+[[statement]]
+  name = "博客声明"
+  url = "/statement/"
+  weight = 1
+
+[[statement]]
+  name = "Logo & 商标设计"
+  url = "/logo/"
+  weight = 2

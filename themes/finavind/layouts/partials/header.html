@@ -1,0 +1,210 @@
+<header id="header">
+  <div class="header-left">
+    <div class="search-wrapper">
+      <button type="button" class="menu-btn-main search-toggle" aria-label="Search posts...">
+        <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M10 1C5.02944 1 1 5.02944 1 10C1 14.9706 5.02944 19 10 19C12.125 19 14.078 18.2635 15.6177 17.0319L20.2929 21.7071C20.6834 22.0976 21.3166 22.0976 21.7071 21.7071C22.0976 21.3166 22.0976 20.6834 21.7071 20.2929L17.0319 15.6177C18.2635 14.078 19 12.125 19 10C19 5.02944 14.9706 1 10 1ZM3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10Z" fill="currentColor"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="header-center">
+    <a href="{{ site.Home.Permalink }}" class="header-title">{{ site.Title }}</a>
+  </div>
+
+  <div class="header-right">
+    <button type="button" class="menu-btn-main" onclick="document.getElementById('drawer').classList.add('open')" aria-label="Menu">
+      <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M12 3C7.02944 3 3 7.02944 3 12C3 16.9706 7.02944 21 12 21C16.9706 21 21 16.9706 21 12C21 7.02944 16.9706 3 12 3ZM1 12C1 5.92487 5.92487 1 12 1C18.0751 1 23 5.92487 23 12C23 18.0751 18.0751 23 12 23C5.92487 23 1 18.0751 1 12Z" fill="currentColor"/>
+        </svg>
+      </button>
+  </div>
+</header>
+
+<div id="search-drawer" class="search-drawer">
+  <div class="search-drawer-inner">
+    <div class="search-drawer-top">
+      <span class="search-drawer-title"><span class="title-hash"># </span>Search</span>
+      <button class="search-drawer-close" id="search-drawer-close" aria-label="Close search">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="24px" height="24px">
+          <path d="M4.70711 3.29289C4.31658 2.90237 3.68342 2.90237 3.29289 3.29289C2.90237 3.68342 2.90237 4.31658 3.29289 4.70711L10.5858 12L3.29289 19.2929C2.90237 19.6834 2.90237 20.3166 3.29289 20.7071C3.68342 21.0976 4.31658 21.0976 4.70711 20.7071L12 13.4142L19.2929 20.7071C19.6834 21.0976 20.3166 21.0976 20.7071 20.7071C21.0976 20.3166 21.0976 19.6834 20.7071 19.2929L13.4142 12L20.7071 4.70711C21.0976 4.31658 21.0976 3.68342 20.7071 3.29289C20.3166 2.90237 19.6834 2.90237 19.2929 3.29289L12 10.5858L4.70711 3.29289Z" fill="currentColor"/>
+        </svg>
+      </button>
+    </div>
+    <div class="search-drawer-header">
+      <input type="text" id="search-input-field" class="search-drawer-input" placeholder="Search posts..." autocomplete="off">
+    </div>
+    <div class="search-drawer-results" id="search-results"></div>
+  </div>
+</div>
+<div id="search-overlay" class="search-overlay"></div>
+
+<div id="drawer" class="drawer">
+  <div class="drawer-inner">
+    <button class="drawer-close" onclick="document.getElementById('drawer').classList.remove('open')" aria-label="Close menu">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="24px" height="24px">
+        <path d="M4.70711 3.29289C4.31658 2.90237 3.68342 2.90237 3.29289 3.29289C2.90237 3.68342 2.90237 4.31658 3.29289 4.70711L10.5858 12L3.29289 19.2929C2.90237 19.6834 2.90237 20.3166 3.29289 20.7071C3.68342 21.0976 4.31658 21.0976 4.70711 20.7071L12 13.4142L19.2929 20.7071C19.6834 21.0976 20.3166 21.0976 20.7071 20.7071C21.0976 20.3166 21.0976 19.6834 20.7071 19.2929L13.4142 12L20.7071 4.70711C21.0976 4.31658 21.0976 3.68342 20.7071 3.29289C20.3166 2.90237 19.6834 2.90237 19.2929 3.29289L12 10.5858L4.70711 3.29289Z" fill="currentColor"/>
+        </svg>
+      </button>
+    </button>
+
+    {{- with site.Params.drawer }}
+    <div class="drawer-user">
+      {{- with .avatar }}
+      <img src="{{ . | absURL }}" alt="" class="drawer-avatar-img" loading="lazy">
+      {{- end }}
+      {{- with .nickname }}
+      <div class="drawer-username">{{ . }}</div>
+      {{- end }}
+      {{- with .id }}
+      <div class="drawer-id">@{{ . }}</div>
+      {{- end }}
+      {{- with .bio }}
+      <div class="drawer-bio">{{ . }}</div>
+      {{- end }}
+      {{- if or .timezone .region }}
+      <div class="drawer-location">
+        {{- with .region }}{{ . }}{{ end }}
+      </div>
+      {{- end }}
+    </div>
+    <hr class="drawer-divider">
+    {{- end }}
+
+    <nav class="drawer-nav">
+      {{- $currentPage := . }}
+      {{- range site.Menus.main }}
+      <a href="{{ .URL }}" class="drawer-nav-item{{ if eq $currentPage.RelPermalink .URL }} active{{ end }}"><span class="title-hash"># </span>{{ .Name }}</a>
+      {{- end }}
+    </nav>
+
+    <hr class="drawer-divider">
+  </div>
+</div>
+<div id="drawer-overlay" class="drawer-overlay" onclick="document.getElementById('drawer').classList.remove('open')"></div>
+
+<script id="search-data" type="application/json">
+{{- $posts := where site.RegularPages "Type" "posts" -}}
+[
+{{- range $i, $p := $posts -}}
+  {{- if $i }},{{ end }}
+  {"title":{{ $p.Title | jsonify }},"slug":{{ $p.File.ContentBaseName | jsonify }},"date":{{ $p.Date.Format "2006-01-02" | jsonify }},"summary":{{ $p.Summary | plainify | jsonify }}}
+{{- end -}}
+]
+</script>
+
+<script>
+(function(){
+  var searchDrawer = document.getElementById('search-drawer');
+  var searchOverlay = document.getElementById('search-overlay');
+  var searchToggle = document.querySelector('.search-toggle');
+  var searchClose = document.getElementById('search-drawer-close');
+  var searchInput = document.getElementById('search-input-field');
+  var searchResults = document.getElementById('search-results');
+
+  if (searchDrawer && searchOverlay && searchInput) {
+    function openSearch() {
+      searchDrawer.classList.add('open');
+      setTimeout(function(){ searchInput.focus(); }, 200);
+    }
+    function closeSearch() {
+      searchDrawer.classList.remove('open');
+      searchResults.innerHTML = '';
+    }
+
+    if (searchToggle) searchToggle.addEventListener('click', function(e){ e.stopPropagation(); openSearch(); });
+    if (searchClose) searchClose.addEventListener('click', closeSearch);
+    searchOverlay.addEventListener('click', closeSearch);
+
+    var searchData = [];
+    try { var el = document.getElementById('search-data'); if (el) searchData = JSON.parse(el.textContent); } catch(e) {}
+    // jsonify wraps values in extra quotes; strip them
+    searchData = searchData.map(function(item){
+      return {
+        title: item.title.replace(/^"|"$/g, ''),
+        slug: item.slug.replace(/^"|"$/g, ''),
+        date: item.date.replace(/^"|"$/g, ''),
+        summary: item.summary.replace(/^"|"$/g, '')
+      };
+    });
+
+    function escapeHtml(str) {
+      var d = document.createElement('div');
+      d.textContent = str;
+      return d.innerHTML;
+    }
+
+    function renderResults(items) {
+      searchResults.innerHTML = '';
+      if (!items || items.length === 0) {
+        var empty = document.createElement('div');
+        empty.className = 'search-result-empty';
+        empty.textContent = 'No results';
+        searchResults.appendChild(empty);
+      } else {
+        items.forEach(function(item){
+          var a = document.createElement('a');
+          a.href = '/posts/' + item.slug + '/';
+          a.className = 'search-result-item';
+          var dateHtml = item.date ? '<span class="search-result-date">' + item.date + '</span>' : '';
+          a.innerHTML = '<span class="search-result-title">' + escapeHtml(item.title) + '</span>' + dateHtml;
+          searchResults.appendChild(a);
+        });
+      }
+    }
+
+    var debounceTimer = null;
+    searchInput.addEventListener('input', function(){
+      var q = searchInput.value.trim().toLowerCase();
+      clearTimeout(debounceTimer);
+      if (q.length < 1) { searchResults.innerHTML = ''; return; }
+      debounceTimer = setTimeout(function(){
+        var filtered = searchData.filter(function(item){
+          return item.title.toLowerCase().indexOf(q) >= 0 ||
+                 item.summary.toLowerCase().indexOf(q) >= 0;
+        });
+        renderResults(filtered);
+      }, 200);
+    });
+
+    var activeIndex = -1;
+    searchInput.addEventListener('keydown', function(e){
+      var items = searchResults.querySelectorAll('.search-result-item');
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        activeIndex = Math.min(activeIndex + 1, items.length - 1);
+        items.forEach(function(el, i){ el.classList.toggle('active', i === activeIndex); });
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        activeIndex = Math.max(activeIndex - 1, -1);
+        items.forEach(function(el, i){ el.classList.toggle('active', i === activeIndex); });
+      } else if (e.key === 'Enter' && activeIndex >= 0 && items[activeIndex]) {
+        e.preventDefault();
+        window.location.href = items[activeIndex].href;
+      } else if (e.key === 'Escape') {
+        closeSearch();
+      }
+    });
+  }
+})();
+  // ── Mobile header auto-hide on scroll ──
+  (function(){
+    var header = document.getElementById('header');
+    if (!header) return;
+    var lastScroll = window.scrollY;
+    var threshold = 10;
+    window.addEventListener('scroll', function(){
+      var currentScroll = window.scrollY;
+      var delta = currentScroll - lastScroll;
+      if (currentScroll <= 0) {
+        header.classList.remove('header-hidden');
+      } else if (delta > threshold) {
+        header.classList.add('header-hidden');
+      } else if (delta < -threshold) {
+        header.classList.remove('header-hidden');
+      }
+      lastScroll = currentScroll;
+    }, { passive: true });
+  })();
+</script>

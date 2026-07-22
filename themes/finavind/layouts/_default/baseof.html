@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="{{ site.Language.Locale | default site.Language.Lang }}">
+    <head>
+        {{ partial "head.html" . }}
+    </head>
+    <body>
+        <div id="splash">
+            <div id="splash-title">{{ site.Title }}</div>
+            <div id="splash-dot"><span></span><span></span><span></span></div>
+        </div>
+
+        <div class="content">
+            {{ partial "header.html" . }}
+
+            <main>{{ block "main" . }}{{ end }}</main>
+
+            {{ partial "footer.html" . }}
+        </div>
+    </body>
+    <script>
+        (function () {
+            (console.info(
+                "%c Theme %c Finavind v0.1.0-dev ",
+                "padding: 3px 6px; border-radius: 3px 0 0 3px; color: #ffffff; background: #003460; font-weight: bold;",
+                "padding: 3px 6px; border-radius: 0 3px 3px 0; color: #000000; background: #AED0EE; font-weight: bold;",
+            ),
+                console.log("Designed by Hao Wu <hao.wu@ortzikantu.com>"));
+        })();
+    </script>
+</html>

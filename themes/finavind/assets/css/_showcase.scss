@@ -1,0 +1,175 @@
+@use "variables" as *;
+
+// ── Showcase Grid ──
+.showcase-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 1.5rem;
+    margin: 1.5rem 0;
+}
+
+.showcase-card {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    border-radius: $radius;
+}
+
+.showcase-card-cover-wrap {
+    border-radius: $radius;
+    overflow: hidden;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+.showcase-card:hover .showcase-card-cover-wrap {
+    transform: translateY(-6px) rotate(-3deg);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+.showcase-card-cover {
+    aspect-ratio: 3 / 4;
+    background: transparent;
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+}
+
+.showcase-card-name {
+    padding: 0.5rem 0.25rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-align: center;
+}
+
+.showcase-card-year {
+    color: $meta;
+    font-weight: 400;
+}
+
+@media (max-width: 768px) {
+    .showcase-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+    }
+}
+
+@media (max-width: 384px) {
+    .showcase-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+}
+
+// ── Showcase Detail ──
+.showcase-year {
+    color: $meta;
+    font-weight: 400;
+    font-size: 0.9rem;
+}
+
+.showcase-detail-body {
+    overflow: hidden;
+}
+
+.showcase-detail-info {
+    overflow: hidden;
+}
+
+.showcase-detail-cover {
+    float: left;
+    width: 250px;
+    margin: 0.3rem 1.5rem 0.8rem 0;
+    aspect-ratio: 3 / 4;
+    overflow: hidden;
+    border-radius: $radius;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+}
+.showcase-detial-title{
+    font-size: 1.6rem;
+}
+.showcase-detail-tags {
+    color: $meta;
+    font-size: 90%;
+    margin: 0.5rem 0;
+}
+
+.showcase-detail-desc {
+    margin: 0.5rem 0 1rem;
+    line-height: 1.7;
+}
+
+.showcase-detail-social {
+    margin-top: 0.5rem;
+    a {
+        display: inline-block;
+        margin-right: 1rem;
+        font-size: 0.9rem;
+    }
+}
+
+.showcase-detail-copyright {
+    font-size: 0.8rem;
+    color: $meta;
+    margin-top: 1rem;
+}
+
+.showcase-content-divider {
+    border: none;
+    border-top: 1px solid $border;
+    margin: 2rem 0 1.5rem;
+}
+
+.showcase-detail-content {
+    margin-bottom: 1rem;
+    p {
+        margin-bottom: 1rem;
+        text-indent: 2em;
+        img{
+            display: block;
+            max-width: 100%;
+            height: auto;
+            margin: 1.5rem auto;
+            border-radius: 12px;
+        }
+    }
+    ul,
+    ol {
+        margin-left: 1.2rem;
+        margin-bottom: 1rem;
+    }
+}
+
+.showcase-detail-links {
+    margin-top: 0.8rem;
+    display: flex;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+    a {
+        @extend %btn;
+        @extend %btn-hover-flip;
+        font-size: 0.85rem;
+        padding: 0.4rem 1rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .showcase-detail-cover {
+        float: none;
+        display: block;
+        margin: 0 auto 2rem;
+        width: 100%;
+        max-width: 190px;
+    }
+}

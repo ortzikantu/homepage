@@ -1,0 +1,75 @@
+@use "variables" as *;
+
+// ── Reset & Base ──
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    height: 100%;
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100%;
+    visibility: visible;
+    background-color: $bg-body;
+    background-size: 7px 7px;
+    background-image:
+        linear-gradient(to right, $grid-color 1px, transparent 1px),
+        linear-gradient(to bottom, $grid-color 1px, transparent 1px);
+    color: $fg;
+    font-weight: 400;
+    font-size: 1rem;
+    font-family: $font;
+    line-height: 1.85;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: auto;
+}
+
+// Hide splash once CSS loads (keep visible briefly for visual polish)
+#splash {
+    animation: splashDone 0.5s ease 0.25s forwards;
+}
+
+@keyframes splashDone {
+    to {
+        opacity: 0;
+        pointer-events: none;
+    }
+}
+
+a {
+    color: $fg;
+    text-decoration: none;
+    transition: color 0.15s ease;
+}
+a:hover {
+    color: $accent;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+// ── Layout ──
+.content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    overflow-wrap: break-word;
+    max-width: $page-w;
+    margin: 0 auto;
+    padding: 3rem 1.5rem 2rem;
+}
+
+.title-hash {
+    color: $accent;
+}

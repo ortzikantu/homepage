@@ -1,0 +1,50 @@
+{{ define "main" }}
+<article>
+
+    <div class="showcase-detail-body">
+        <div class="showcase-detail-cover">
+            {{- $coverSrc := "/assets/imgs/default_works_icon.webp" | absURL }}
+            {{- with .Params.cover }}
+            {{- $img := resources.Get . }}
+            {{- if $img }} {{- $thumb := $img.Resize "560x webp" }}
+            {{- $coverSrc = $thumb.Permalink }}
+            {{- else }}
+            {{- $coverSrc = . | relURL }}
+            {{- end }}
+            {{- end }}
+            <img src="{{ $coverSrc }}" alt="" loading="lazy" />
+        </div>
+
+        <div class="showcase-detail-info">
+            <h1 class="showcase-detial-title">
+                {{ .Title }}
+                <span class="showcase-year">({{ .Date.Format "2006-01" }})</span>
+            </h1>
+
+            {{- with .Params.tags }}
+            <div class="showcase-detail-tags">{{ delimit . " · " }}</div>
+            {{- end }} {{- with .Params.desc }}
+            <div class="showcase-detail-desc">{{ . }}</div>
+            {{- end }} {{- with .Params.copyright }}
+            <div class="showcase-detail-copyright">{{ . }}</div>
+            {{- end }}
+            {{- $links := slice }}
+            {{- with .Params.links }}
+            {{ $links = . }}
+            {{ end }}
+            {{- with $links }}
+            <div class="showcase-detail-links">
+                {{- range . }}
+                <a href="{{ .url }}" target="_blank" rel="noopener" >{{ .name }}</a>
+                {{- end }}
+            </div>
+            {{- end }}
+        </div>
+    </div>
+
+    {{- with .Content }}
+    <hr class="showcase-content-divider" />
+    <div class="showcase-detail-content">{{ . }}</div>
+    {{- end }}
+</article>
+{{ end }}

@@ -1,0 +1,12 @@
+@use "variables" as *;
+
+// ── Pill button ──
+.btn {
+    @extend %btn;
+    @extend %btn-hover-flip;
+}
+
+// ── Icon button ──
+.btn-icon {
+    @extend %icon-btn;
+}

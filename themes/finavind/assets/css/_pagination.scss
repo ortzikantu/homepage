@@ -1,0 +1,64 @@
+@use "variables" as *;
+
+// ── Pagination ──
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: 3rem;
+    font-size: 13px;
+
+    a,
+    strong,
+    .page-current,
+    .page-nav,
+    .page-disabled {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 35px;
+        height: 35px;
+        border-radius: 12px;
+        text-decoration: none;
+    }
+
+    a,
+    .page-nav {
+        border: none;
+        background: $bg;
+        color: $accent;
+        box-shadow: $shadow-sm;
+        transition:
+            background 0.25s ease,
+            color 0.25s ease,
+            box-shadow 0.25s ease;
+        &:hover {
+            background: $accent;
+            color: $bg;
+            box-shadow: $shadow-hover;
+        }
+    }
+
+    .page-current,
+    strong {
+        background: $accent;
+        color: $bg;
+    }
+
+    .page-disabled {
+            color: $border;
+            cursor: default;
+        }
+
+        .page-gap {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 5px;
+            height: 35px;
+            color: $border;
+            font-size: 0.9rem;
+            user-select: none;
+        }
+}

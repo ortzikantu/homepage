@@ -1,0 +1,30 @@
+@use "variables" as *;
+
+// ── Section head ──
+.section-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.6rem;
+    margin-bottom: 2rem;
+    margin-top: 4rem;
+
+    .section-head-left {
+        display: flex;
+        align-items: baseline;
+        gap: 0.6rem;
+        min-width: 0;
+    }
+
+    h2 {
+        margin: 0;
+        color: $fg;
+        font-size: 1.125rem;
+    }
+
+    .count {
+        color: $meta;
+        font-size: 0.93rem;
+        font-weight: 400;
+    }
+}

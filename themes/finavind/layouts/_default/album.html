@@ -1,0 +1,94 @@
+{{ define "main" }}
+  {{- $photos := resources.Match (printf "%s/*" .Params.album_dir) -}}
+  <article>
+    <header class="article-header">
+      <h1 class="article-title">{{ .Title }}</h1>
+      <div class="post-meta">
+        <div class="post-meta-line">
+          {{- with .Date }}<time datetime="{{ .Format "2006-01-02" }}">{{ .Format "2006-01-02" }}</time>{{ end }}
+          {{- with .Params.author }} · {{ . }}{{ end }}
+          · {{ len $photos }} photos
+        </div>
+      </div>
+      {{- with .Params.desc }}
+      <p class="album-description">{{ . }}</p>
+      {{- end }}
+    </header>
+
+    <div class="gallery-grid-4">
+      {{ range $index, $photo := $photos }}
+        {{- $thumb := $photo.Resize "400x webp" -}}
+        {{- $full := $photo.Resize "1600x webp" -}}
+        <a href="#" class="gallery-item" data-index="{{ $index }}" data-full="{{ $full.Permalink }}">
+          <img src="{{ $thumb.Permalink }}" alt="" loading="lazy">
+        </a>
+      {{ end }}
+    </div>
+  </article>
+
+  {{- if gt (len $photos) 0 }}
+  <div class="lightbox-overlay" id="lb-overlay"></div>
+  <div class="lightbox-container" id="lb-container">
+    <a href="#" class="lightbox-close" id="lb-close">&times;</a>
+    <a href="#" class="lightbox-prev" id="lb-prev">&#10094;</a>
+    <div class="lightbox-img" id="lb-img"><img id="lb-image" src="" alt=""></div>
+    <a href="#" class="lightbox-next" id="lb-next">&#10095;</a>
+  </div>
+
+  <script>
+    (function(){
+      var items = document.querySelectorAll('.gallery-item');
+      var overlay = document.getElementById('lb-overlay');
+      var container = document.getElementById('lb-container');
+      var img = document.getElementById('lb-image');
+      var close = document.getElementById('lb-close');
+      var prev = document.getElementById('lb-prev');
+      var next = document.getElementById('lb-next');
+      var images = [];
+      var current = 0;
+      var touchStartX = 0;
+
+      items.forEach(function(el, i){
+        images[i] = el.getAttribute('data-full');
+        el.addEventListener('click', function(e){
+          e.preventDefault();
+          current = i;
+          openLightbox();
+        });
+      });
+
+      function openLightbox(){
+        img.src = images[current];
+        container.classList.add('show');
+        overlay.classList.add('show');
+        document.body.style.overflow = 'hidden';
+      }
+      function closeLightbox(){
+        container.classList.remove('show');
+        overlay.classList.remove('show');
+        document.body.style.overflow = '';
+      }
+      function prevImg(){ current = (current - 1 + images.length) % images.length; img.src = images[current]; }
+      function nextImg(){ current = (current + 1) % images.length; img.src = images[current]; }
+
+      close.addEventListener('click', function(e){ e.preventDefault(); closeLightbox(); });
+      overlay.addEventListener('click', closeLightbox);
+      prev.addEventListener('click', function(e){ e.preventDefault(); prevImg(); });
+      next.addEventListener('click', function(e){ e.preventDefault(); nextImg(); });
+
+      document.addEventListener('keydown', function(e){
+        if(!container.classList.contains('show')) return;
+        if(e.key === 'Escape') closeLightbox();
+        if(e.key === 'ArrowLeft') prevImg();
+        if(e.key === 'ArrowRight') nextImg();
+      });
+
+      container.addEventListener('touchstart', function(e){ touchStartX = e.changedTouches[0].screenX; }, {passive:true});
+      container.addEventListener('touchend', function(e){
+        var diff = touchStartX - e.changedTouches[0].screenX;
+        if(Math.abs(diff) > 50){ if(diff>0) nextImg(); else prevImg(); }
+      }, {passive:true});
+    })();
+  </script>
+  {{- end }}
+{{ end }}
